@@ -8,6 +8,7 @@ dc = pd.read_csv('dc_comic.csv')
 marvel['world'] = 'Marvel'
 dc['world'] = 'DC'
 
+marvel['urlslug'] = '/wiki' + marvel['urlslug']
 marvel['shift'] = np.random.uniform(0, 0.1, size=marvel.shape[0])
 dc['shift'] = np.random.uniform(-0.1, 0, size=dc.shape[0])
 
@@ -39,6 +40,9 @@ for k in ['ALIGN', 'EYE', 'HAIR', 'SEX', 'GSM', 'ALIVE', 'world', 'YEAR', 'ID']:
     heros = labelEncode(heros, k)
     heros[k + '_id'] = heros[k + '_id'] + heros['shift']
 
-heros.to_csv('comic_data_2.csv')
+
+heros['urlslug'] = heros['urlslug'].str.replace("\\\/", '/')
+
+heros.to_csv('comic_data_2.csv', index=False)
 heros.columns
 heros.urlslug
